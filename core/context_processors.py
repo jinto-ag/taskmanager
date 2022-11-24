@@ -1,3 +1,5 @@
 def common_data(request):
-    context = {}
+    context = {
+        "project_name" : "TaskManager"
+    }
     return context

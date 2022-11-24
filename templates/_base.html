@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- styles -->
+    {% block styles %}
+    <!-- default styles -->
+    {% include 'partials/_style.html' %}
+    <!-- end -->
+    {% endblock styles %}
+
+    <title>{{ project_name }} | {{ page_name }}</title>
+  </head>
+
+  <body>
+    <!-- Messages -->
+    {% include 'partials/_message.html' %}
+
+    <!-- Navbar -->
+    {% include 'partials/_navigation.html' %}
+
+    <!-- main content -->
+    {% block content %} {% endblock %}
+
+    <!-- Footer -->
+    {% include 'partials/_footer.html' %}
+
+    <!-- scripts -->
+    {% block scripts %}
+    <!-- default scripts -->
+    {% include 'partials/_script.html' %}
+    <!-- end -->
+    {% endblock scripts %}
+  </body>
+</html>

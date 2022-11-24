@@ -1,0 +1,390 @@
+<div class="task-list--item">
+  <!-- Modal Items START -->
+
+  <!-- Confirmation Modal START -->
+  <div
+    class="task-list--item-action-confirm modal fade"
+    id="id_task_item_status_update_modal_{{task.id}}"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="id_task_item_status_update_label_{{task.id}}"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form
+            action="{#{% url 'core:task_status_update' pk=task.id %}#}"
+            method="post"
+          >
+            {% csrf_token %}
+            <p class="text-center md-typo-b-lg">Mark task as completed?</p>
+            <input
+              name="status"
+              type="hidden"
+              value="{{task.StatusChoice.DONE}}"
+            />
+            <div class="d-flex justify-content-center gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Mark as Done
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Confirmation Modal END -->
+
+  <!-- Modal Items END -->
+  <div class="task-list--item-header">
+    <div class="row align-items-center justify-content-between">
+      <h1 class="col task-list--item-header--title">Sample Task</h1>
+      <div class="col-auto task-list--item-header--timestamp">9 mins ago</div>
+      <div class="col-auto task-list--item-header--icon">
+        <button
+          type="button"
+          class="btn p-1 border-0 shadow-none text-light"
+          data-bs-toggle="dropdown"
+          data-bs-target="#id_task_item_action_menu_{{task.id}}"
+          aria-expanded="false"
+          data-bs-auto-close="true"
+        >
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+        <!-- Action menu START -->
+
+        <!-- action menu start-->
+        <ul class="dropdown-menu dropdown-menu-end task-list--item-action-menu">
+          <li><h6 class="dropdown-header">Actions</h6></li>
+
+          <li>
+            <button class="dropdown-item" type="button">Action</button>
+          </li>
+          <li>
+            <button class="dropdown-item" type="button">Another action</button>
+          </li>
+          <li>
+            <button class="dropdown-item" type="button">
+              Something else here
+            </button>
+          </li>
+        </ul>
+        <!-- action menu end-->
+        <!-- Action menu END -->
+      </div>
+    </div>
+  </div>
+  <div class="task-list--item-body">
+    <div class="task-list--item-body--content">
+      <div class="row">
+        <div class="col task-list--item-body--title">Proposed Date</div>
+        <div class="col">12-Nov-2022</div>
+      </div>
+      <div class="row">
+        <div class="col task-list--item-body--title">Description</div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Task, duty, job, chore, stint, assignment mean a piece of work to be
+          done. task implies work imposed by a person in authority or an
+          employer or by circumstance.
+        </div>
+      </div>
+      <!-- Team members START -->
+      <div class="row">
+        <div class="col task-list--item-body--title">Team Members</div>
+      </div>
+      <div class="task-list--item--badge-container">
+        <div class="row row-cols-auto">
+          <div class="col-auto">
+            <a href="" class="task-list--item--badge avatar">
+              <img
+                src="/media/default/user.png"
+                alt=""
+                class="task-list--item--badge-avatar"
+              />
+              <label href="#" class="task-list--item--badge-text">@user</label>
+            </a>
+          </div>
+          <div class="col-auto">
+            <a href="" class="task-list--item--badge avatar">
+              <img
+                src="/media/default/user.png"
+                alt=""
+                class="task-list--item--badge-avatar"
+              />
+              <label href="#" class="task-list--item--badge-text">@user</label>
+            </a>
+          </div>
+          <div class="col-auto">
+            <a href="" class="task-list--item--badge avatar">
+              <img
+                src="/media/default/user.png"
+                alt=""
+                class="task-list--item--badge-avatar"
+              />
+              <label href="#" class="task-list--item--badge-text">@user</label>
+            </a>
+          </div>
+          <div class="col-auto">
+            <a href="" class="task-list--item--badge avatar">
+              <img
+                src="/media/default/user.png"
+                alt=""
+                class="task-list--item--badge-avatar"
+              />
+
+              <label href="#" class="task-list--item--badge-text">@user</label>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="task-list--item-footer">
+    <div class="row">
+      <div class="col-auto">
+        <button class="btn btn-md3 btn-primary">Done</button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-md3 btn-secondary">View Details</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :root {
+    /* bg color */
+    --bg-black: rgba(0, 0, 0);
+    --bg-1: rgba(0, 0, 0, 0.9);
+    --bg-2: rgba(255, 255, 255, 0.2);
+    --bg-3: rgba(255, 255, 255, 0.3);
+    --bg-4: rgba(255, 255, 255, 0.4);
+    --bg-5: rgba(255, 255, 255, 0.5);
+    /* on bg color */
+    --on-bg-1: rgba(255, 255, 255, 0.9);
+    --on-bg-2: rgba(255, 255, 255, 0.8);
+    --on-bg-3: rgba(255, 255, 255, 0.7);
+    --on-bg-4: rgba(255, 255, 255, 0.6);
+    --on-bg-5: rgba(255, 255, 255, 0.5);
+    /* font size */
+  }
+
+  .surface-1 {
+    background-color: var(--bg-1);
+  }
+  .surface-2 {
+    background-color: var(--bg-2);
+  }
+  .surface-3 {
+    background-color: var(--bg-3);
+  }
+  .surface-4 {
+    background-color: var(--bg-4);
+  }
+  .surface-5 {
+    background-color: var(--bg-5);
+  }
+
+  /* components START */
+  .btn.btn-md3{
+    padding: 8px 16px;
+    border-radius: 100px;
+
+  }
+  /* components END */
+
+  /* Task Item START */
+  .task-list--item {
+    background-color: var(--bg-1);
+    color: var(--on-bg-1);
+    border-radius: 16px;
+    width: 320px;
+    --gap: 8px;
+    --gutter-x: 16px;
+    --gutter-y: 8px;
+  }
+  .task-list--item > * {
+    padding: var(--gutter-y) var(--gutter-x);
+  }
+  .task-list--item-action-menu {
+    background-color: var(--bg-1);
+    color: var(--on-bg-1);
+  }
+
+  .task-list--item-action-menu * {
+    color: var(--on-bg-1);
+    /* label Medium */
+    font-family: var(--md-sys-typescale-label-medium-font);
+    line-height: var(--md-sys-typescale-label-medium-line-height);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+  }
+
+  .task-list--item-action-confirm {
+    background-color: var(--bg-4);
+    color: var(--on-bg-4);
+  }
+
+  /* Task List Item Header START*/
+  .task-list--item-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    width: 100%;
+    background-color: var(--bg-2);
+    color: var(--on-bg-2);
+    /* title Medium */
+    font-family: var(--md-sys-typescale-title-medium-font);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    font-size: var(--md-sys-typescale-title-medium-size);
+    letter-spacing: var(--md-sys-typescale-title-medium-tracking);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+  }
+
+  .task-list--item-header .col {
+  }
+
+  .task-list--item-header .row {
+    --bs-gutter-x: 8px;
+  }
+
+  .task-list--item-header--title {
+    margin: 0;
+    /* title Medium */
+    font-family: var(--md-sys-typescale-title-medium-font);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    font-size: var(--md-sys-typescale-title-medium-size);
+    letter-spacing: var(--md-sys-typescale-title-medium-tracking);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+  }
+  .task-list--item-header--timestamp {
+    /* label Medium */
+    font-family: var(--md-sys-typescale-label-small-font);
+    line-height: var(--md-sys-typescale-label-small-line-height);
+    font-size: var(--md-sys-typescale-label-small-size);
+    letter-spacing: var(--md-sys-typescale-label-small-tracking);
+    font-weight: var(--md-sys-typescale-label-small-weight);
+
+    font-style: italic;
+    color: var(--on-bg-5);
+  }
+  .task-list--item-header--icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+  }
+  /* Task List Item Header END*/
+
+  /* Task List Item Body START*/
+  .task-list--item-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    padding: var(--gutter-x) var(--gutter-y);
+    background-color: var(--bg-1);
+    color: var(--on-bg-1);
+    /* body small */
+    font-family: var(--md-sys-typescale-body-small-font);
+    line-height: var(--md-sys-typescale-body-small-line-height);
+    font-size: var(--md-sys-typescale-body-small-size);
+    letter-spacing: var(--md-sys-typescale-body-small-tracking);
+    font-weight: var(--md-sys-typescale-body-small-weight);
+  }
+  .task-list--item-body--content {
+    display: flex;
+    flex-direction: column;
+    padding: var(--gutter-x) var(--gutter-y);
+    gap: var(--gap);
+    background-color: var(--bg-2);
+    color: var(--on-bg-2);
+    border-radius: var(--gutter-x);
+  }
+  .task-list--item-body--content .row {
+    --bs-gutter-x: 8px;
+    flex: 1 1 auto;
+    margin: 0;
+  }
+  /* Title */
+  .task-list--item-body--title {
+    color: var(--on-bg-1);
+    /* title small */
+    font-family: var(--md-sys-typescale-title-small-font);
+    line-height: var(--md-sys-typescale-title-small-line-height);
+    font-size: var(--md-sys-typescale-title-small-size);
+    letter-spacing: var(--md-sys-typescale-title-small-tracking);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+  }
+  /* Badge */
+  .task-list--item--badge-container {
+    height: calc(56px * 2);
+  }
+  .task-list--item--badge-container > .row {
+    height: calc(56px * 2);
+    gap: var(--gap);
+  }
+  .task-list--item--badge-container [class*="col"] {
+    height: max-content;
+    padding: 0;
+  }
+  .task-list--item--badge {
+    --avatar-radius: 50%;
+    --avatar-size: 24px;
+    display: inline-block;
+    align-items: center;
+    gap: var(--gap);
+    padding: 0;
+    padding-left: 4px;
+    padding-right: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid var(--on-bg-5);
+    border-radius: 24px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .task-list--item--badge-avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: var(--avatar-radius);
+    background-color: var(--bg-5);
+  }
+
+  .task-list--item--badge-text {
+    color: var(--on-bg-2);
+    text-decoration: inherit;
+  }
+  /* Task List Item Body END */
+
+  .task-list--item-footer {
+    background-color: var(--bg-2);
+    color: var(--on-bg-2);
+  }
+
+  .task-list--item-footer [class*="col"] {
+    padding: 0;
+  }
+
+  .task-list--item-footer [class*="row"] {
+    margin: 0;
+    gap: var(--gap);
+  }
+  /* Task Item END */
+</style>
