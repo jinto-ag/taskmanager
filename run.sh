@@ -37,6 +37,8 @@ touch templates/registration/signup.html
 touch templates/partials/_navigation.html
 touch templates/partials/_message.html
 touch templates/partials/_footer.html
+touch templates/partials/_style.html
+touch templates/partials/_script.html
 touch templates/_base.html
 # Create default templates
 touch templates/core/home.html
@@ -57,6 +59,8 @@ touch core/mixins.py
 touch core/signals.py
 touch core/utils.py
 touch core/base.py
+touch core/context_processors.py
+touch core/managers.py
 # for user app
 touch user/urls.py
 touch user/forms.py
@@ -64,4 +68,13 @@ touch user/mixins.py
 touch user/signals.py
 touch user/utils.py
 touch user/base.py
+touch user/managers.py
+# Static files
+touch static/js/script.js
+touch static/css/style.css
+touch static/css/font.css
+touch static/css/constant.css
+touch static/img/test.txt #for git
+touch static/libr/test.txt #for git
+touch static/font/test.txt #for git
 # add content for urls.py

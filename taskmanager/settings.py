@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+import environ
+from django.contrib.messages import constants as messages
+
+env = environ.Env()
+env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,9 +43,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third party apps
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.github",
     # Local apps
     "core",
     "user",
+    # Activity stream support
+    "actstream",
 ]
 
 MIDDLEWARE = [
@@ -65,6 +79,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.context_processors.common_data",
             ],
         },
     },
@@ -133,7 +148,78 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Authentication Related
 AUTH_USER_MODEL = "user.User"
+
+# auth URLs
 LOGIN_URL = "user:login"
 LOGOUT_URL = "user:logout"
 LOGIN_REDIRECT_URL = "core:home"
 LOGOUT_REDIRECT_URL = "user:login"
+
+
+# django-allauth
+# Authentication Backend
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        "APP": {
+            "client_id": env("GOOGLE_CLIENT_ID"),
+            "secret": env("GOOGLE_CLIENT_SECRET"),
+            "key": "",
+        },
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
+
+
+# Message framework
+# Django Message Custom Tag Names
+MESSAGE_TAGS = {
+    messages.DEBUG: "alert-secondary",
+    messages.INFO: "alert-info",
+    messages.SUCCESS: "alert-success",
+    messages.WARNING: "alert-warning",
+    messages.ERROR: "alert-danger",
+}
+
+
+# Activity Stream
+ACTSTREAM_SETTINGS = {
+    "MANAGER": "core.managers.CustomActionManager",
+    "FETCH_RELATIONS": True,
+    "USE_PREFETCH": True,
+    "USE_JSONFIELD": True,
+    "GFK_FETCH_DEPTH": 1,
+}
+
+
+# Email Integration
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = "sent_mails"
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
+
+# Google reCaptcha Integration
+GOOGLE_RECAPTCHA_SITE_KEY = env("GOOGLE_RECAPTCHA_SITE_KEY")
+GOOGLE_RECAPTCHA_SECRET_KEY = env("GOOGLE_RECAPTCHA_SECRET_KEY")
+GOOGLE_RECAPTCHA_VERIFICATION_URL = "https://www.google.com/recaptcha/api/siteverify"
+GOOGLE_API_KEY = env("GOOGLE_API_KEY")
