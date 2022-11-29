@@ -25,10 +25,14 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Box>
         <Navigation></Navigation>
-        <Stack direction={"row"} justifyContent={"space-between"}>
-          <Sidebar></Sidebar>
-          <Main></Main>
-          <Sidebar></Sidebar>
+        <Stack direction={"row"} justifyContent={"space-between"} spacing={1}>
+          <Sidebar
+            position={"left-top"}
+            sx={{ backgroundColor: theme.palette.background }}
+            flex={1}
+          ></Sidebar>
+          <Main flex={6}></Main>
+          <Sidebar position={"right-top"} flex={1}></Sidebar>
         </Stack>
       </Box>
     </ThemeProvider>
