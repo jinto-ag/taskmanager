@@ -17,15 +17,7 @@ const Main = (props) => {
   return (
     <Box flex={props.flex} bgcolor={"darkgray"} p={2}>
       <Box>
-        <Form
-          fields={{
-            title: { value: "", type: fields.TEXT },
-            description: { value: "", type: fields.TEXTAREA },
-            proposed_date: { value: "2022-10-11", type: fields.DATE },
-            related_tasks: { value: [], type: fields.SELECT },
-            assign_to: { value: [], type: fields.SELECT },
-          }}
-        ></Form>
+        <Form></Form>
       </Box>
     </Box>
   );
