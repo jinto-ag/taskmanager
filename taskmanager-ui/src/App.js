@@ -1,41 +1,46 @@
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import "./App.css";
-
-import * as React from "react";
-import { red } from "@mui/material/colors";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Navigation from "./components/Navigation/Navigation";
-import { Box, Stack } from "@mui/material";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Main from "./components/Main/Main";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: red[500],
-    },
-  },
-});
+import { Box, CssBaseline, Divider, ThemeProvider } from "@mui/material";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/Account/Login";
+import Signup from "./pages/Account/Signup";
+import Dashboard from "./pages/Dashboard";
+import Chat from "./pages/Chat";
+import Sidebar from "./pages/global/Sidebar";
+import Topbar from "./pages/global/Topbar";
+import ProfileDetail from "./pages/Profile/ProfileDetail";
+import TaskDetail from "./pages/Task/TaskDetail";
+import TaskForm from "./pages/Task/TaskForm";
+import TaskList from "./pages/Task/TaskList";
+import { ColorModeContext, useMode } from "./theme";
 
 const App = () => {
+  const [theme, colorMode] = useMode();
+
   return (
-    <ThemeProvider theme={theme}>
-      <Box>
-        <Navigation></Navigation>
-        <Stack direction={"row"} justifyContent={"space-between"} spacing={1}>
-          <Sidebar
-            position={"left-top"}
-            sx={{ backgroundColor: theme.palette.background }}
-            flex={1}
-          ></Sidebar>
-          <Main flex={6}></Main>
-          <Sidebar position={"right-top"} flex={1}></Sidebar>
-        </Stack>
-      </Box>
-    </ThemeProvider>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="app">
+          <Sidebar />
+          <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column" }}>
+            <Topbar position={"fixed"} />
+            <Box display={"flex"} component="main">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/login/" element={<Login />} />
+                <Route path="/signup/" element={<Signup />} />
+                <Route path="/profile/detail/" element={<ProfileDetail />} />
+                <Route path="/task/create/" element={<TaskForm />} />
+                <Route path="/task/list/" element={<TaskList />} />
+                <Route path="/task/update/" element={<TaskForm />} />
+                <Route path="/task/detail/" element={<TaskDetail />} />
+                <Route path="/chat/" element={<Chat />} />
+              </Routes>
+            </Box>
+          </Box>
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 };
 
