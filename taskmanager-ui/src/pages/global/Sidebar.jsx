@@ -1,159 +1,176 @@
-import { Box, useTheme } from "@mui/material";
-import React, { useContext } from "react";
-import { ColorModeContext, tokens } from "../../theme";
-
+import {
+  HelpOutlineOutlined,
+  MenuOutlined,
+  PersonOutlineOutlined,
+  RunCircleOutlined,
+  TaskOutlined,
+} from "@mui/icons-material";
 import AddTaskOutlined from "@mui/icons-material/AddTaskOutlined";
 import AnalyticsOutlinedIcon from "@mui/icons-material/AnalyticsOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import ChatOutlined from "@mui/icons-material/ChatOutlined";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DashboardOutlined from "@mui/icons-material/DashboardOutlined";
-import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
-import MenuIcon from "@mui/icons-material/Menu";
-import Divider from "@mui/material/Divider";
-import MuiDrawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Menu,
+  menuClasses,
+  MenuItem,
+  Sidebar as ProSidebar,
+  sidebarClasses,
+  useProSidebar,
+} from "react-pro-sidebar";
 import { Link } from "react-router-dom";
+import { tokens } from "../../theme";
 
-const drawerWidth = 240;
-
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
-const StyledListItem = (label, link, icon, open) => (
-  <ListItem key={label}  disablePadding sx={{ display: "block" }}>
-    <ListItemButton
-      key={link}
-      component={Link}
-      to={link}
-      sx={{
-        minHeight: 48,
-        justifyContent: open ? "initial" : "center",
-        px: 2.5,
+const Item = ({ title, to, icon, selected, setSelected }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  return (
+    <MenuItem
+      routerLink={<Link to={to} />}
+      active={selected === title}
+      onClick={() => setSelected(title)}
+      icon={icon}
+      rootStyles={{
+        ["." + menuClasses.button]: {
+          borderRadius: theme.shape.pillRadius,
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+        },
       }}
     >
-      <ListItemIcon
-        sx={{
-          minWidth: 0,
-          mr: open ? 3 : "auto",
-          justifyContent: "center",
-        }}
-      >
-        {icon}
-      </ListItemIcon>
-      <ListItemText
-        primary={label}
-        sx={{ opacity: open ? 1 : 0, textDecoration: "none" }}
-      />
-    </ListItemButton>
-  </ListItem>
-);
+      <Typography>{title}</Typography>
+    </MenuItem>
+  );
+};
 
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const colorMode = useContext(ColorModeContext);
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  const navs = [
-    { label: "Dashboard", link: "/", icon: <DashboardOutlined /> },
-    { label: "Add task", link: "/task/create/", icon: <AddTaskOutlined /> },
-    {
-      label: "Task list",
-      link: "/task/list/",
-      icon: <FormatListBulletedOutlinedIcon />,
-    },
-    { label: "Assign task", link: "/", icon: <AssignmentIndOutlinedIcon /> },
-    { label: "Recent activities", link: "/", icon: <AnalyticsOutlinedIcon /> },
-    { label: "Chat", link: "/chat", icon: <ChatOutlined /> },
-  ];
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [selected, setSelected] = useState("Dashboard");
+  const { collapseSidebar, toggleSidebar, collapsed, toggled } =
+    useProSidebar();
 
   return (
-    <Drawer variant="permanent" open={open}>
-      <DrawerHeader>
-        {open ? (
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        ) : (
-          <IconButton onClick={handleDrawerOpen}>
-            <MenuIcon />
-          </IconButton>
-        )}
-      </DrawerHeader>
-      <Divider />
-      <List>
-        {navs.map((nav, index) =>
-          StyledListItem(nav.label, nav.link, nav.icon, open)
-        )}
-      </List>
-      {/* <Divider />*/}
-    </Drawer>
+    <Box mr={1} height="100%" display="flex">
+      <ProSidebar
+        breakPoint="xs"
+        transitionDuration={700}
+        rootStyles={{
+          [`.${sidebarClasses.container}`]: {
+            backgroundColor: colors.neutral[95],
+          },
+          border: "none",
+        }}
+      >
+        <Menu
+          rootStyles={{
+            [`.${menuClasses.button}`]: {
+              marginInline: "8px",
+              display: "flex",
+              justifyContent: "center",
+            },
+            [`.${menuClasses.icon}`]: {},
+          }}
+          menuItemStyles={{
+            paddingInline: "8px",
+            button: ({ level, active, disabled }) => {
+              return {
+                color: disabled
+                  ? theme.palette.text.disabled
+                  : theme.palette.text.primary,
+                backgroundColor: active
+                  ? theme.palette.primary.main
+                  : undefined,
+                gap: collapsed ? 0 : undefined,
+              };
+            },
+            icon: ({ level }) => {
+              return {
+                margin: collapsed ? 0 : undefined,
+              };
+            },
+          }}
+        >
+          <MenuItem
+            onClick={() => collapseSidebar()}
+            icon={<MenuOutlined />}
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h5">Task Manager</Typography>
+          </MenuItem>
+          <Item
+            title="Dashboard"
+            icon={<DashboardOutlined />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/"
+          />
+          <Item
+            title="Create Task"
+            icon={<AddTaskOutlined />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/task/create/"
+          />
+          <Item
+            title="My Tasks"
+            icon={<TaskOutlined />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/task/list/"
+          />
+          <Item
+            title="Assigned Tasks"
+            icon={<AssignmentIndOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/"
+          />
+          <Item
+            title="Recent Activities"
+            icon={<RunCircleOutlined />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/"
+          />
+          <Item
+            title="Collaborators"
+            icon={<PersonOutlineOutlined />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/"
+          />
+          <Item
+            title="Reports"
+            icon={<AnalyticsOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/"
+          />
+          <Item
+            title="Chat"
+            icon={<ChatOutlined />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/"
+          />
+          <Item
+            title="Help"
+            icon={<HelpOutlineOutlined />}
+            selected={selected}
+            setSelected={setSelected}
+            to="/"
+          />
+        </Menu>
+      </ProSidebar>
+    </Box>
   );
 };
 

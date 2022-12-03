@@ -1,11 +1,18 @@
-import { Box } from '@mui/material'
-import React from 'react'
+import { Box, TextField } from "@mui/material";
+import React from "react";
 
-
-const FormControl = () => {
+const FormControl = ({id, label, defaultValue, helperText, type}) => {
   return (
-    <div>FormControl</div>
-  )
-}
+    <Box>
+      <TextField
+        error
+        id={id}
+        label={label}
+        defaultValue={defaultValue}
+        helperText={helperText}
+      />
+    </Box>
+  );
+};
 
-export default FormControl
+export default FormControl;

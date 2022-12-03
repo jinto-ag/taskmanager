@@ -12,6 +12,7 @@ import TaskDetail from "./pages/Task/TaskDetail";
 import TaskForm from "./pages/Task/TaskForm";
 import TaskList from "./pages/Task/TaskList";
 import { ColorModeContext, useMode } from "./theme";
+import { ProSidebarProvider } from "react-pro-sidebar";
 
 const App = () => {
   const [theme, colorMode] = useMode();
@@ -20,25 +21,27 @@ const App = () => {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="app">
-          <Sidebar />
-          <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column" }}>
-            <Topbar position={"fixed"} />
-            <Box display={"flex"} component="main">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/login/" element={<Login />} />
-                <Route path="/signup/" element={<Signup />} />
-                <Route path="/profile/detail/" element={<ProfileDetail />} />
-                <Route path="/task/create/" element={<TaskForm />} />
-                <Route path="/task/list/" element={<TaskList />} />
-                <Route path="/task/update/" element={<TaskForm />} />
-                <Route path="/task/detail/" element={<TaskDetail />} />
-                <Route path="/chat/" element={<Chat />} />
-              </Routes>
+        <ProSidebarProvider>
+          <div className="app">
+            <Sidebar />
+            <Box sx={{ display: "flex", flexGrow: 1, flexDirection: "column" }}>
+              <Topbar position={"fixed"} />
+              <Box display={"flex"} component="main" width="100%" height="100%">
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/login/" element={<Login />} />
+                  <Route path="/signup/" element={<Signup />} />
+                  <Route path="/profile/detail/" element={<ProfileDetail />} />
+                  <Route path="/task/create/" element={<TaskForm />} />
+                  <Route path="/task/list/" element={<TaskList />} />
+                  <Route path="/task/update/" element={<TaskForm />} />
+                  <Route path="/task/detail/" element={<TaskDetail />} />
+                  <Route path="/chat/" element={<Chat />} />
+                </Routes>
+              </Box>
             </Box>
-          </Box>
-        </div>
+          </div>
+        </ProSidebarProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

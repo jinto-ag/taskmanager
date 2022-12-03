@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, useTheme } from "@mui/material/styles";
 import { createContext, useMemo, useState } from "react";
 
 export const tokens = (mode) => ({
@@ -199,46 +199,18 @@ export const themeSettings = (mode) => {
       ...(mode === "dark"
         ? {
             primary: {
-              main: colors.primary[80],
+              main: colors.primary[40],
             },
             secondary: {
-              main: colors.secondary[80],
+              main: colors.secondary[40],
             },
             neutral: {
               dark: colors.neutral[99],
-              main: colors.neutral[80],
+              main: colors.neutral[40],
               light: colors.neutral[10],
             },
             background: {
               default: colors.neutral[99],
-            },
-            typography: {
-              fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-              fontSize: 12,
-              h1: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 40,
-              },
-              h2: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 32,
-              },
-              h3: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 24,
-              },
-              h4: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 20,
-              },
-              h5: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 16,
-              },
-              h6: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 14,
-              },
             },
           }
         : {
@@ -256,35 +228,12 @@ export const themeSettings = (mode) => {
             background: {
               default: colors.neutral[99],
             },
-            typography: {
-              fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-              fontSize: 12,
-              h1: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 40,
-              },
-              h2: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 32,
-              },
-              h3: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 24,
-              },
-              h4: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 20,
-              },
-              h5: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 16,
-              },
-              h6: {
-                fontFamily: ["Poppins", "Dosis", "sans-serif"].join(","),
-                fontSize: 14,
-              },
-            },
+           
           }),
+    },
+    shape: {
+      borderRadius: 16,
+      pillRadius: 50,
     },
   };
 };
